@@ -2,12 +2,15 @@
 solve the imcompressible, isothermal, Newtonian fluids N-S equation (with constant viscosity flow and no energy equation)
 
 Momentum equation
+
 $$
 \frac{\partial(\rho \phi)}{\partial t}+\nabla \cdot(\rho \mathbf{u} \phi)=\nabla \cdot\left(\mu \nabla \phi\right)+Q^\phi-\nabla p
 $$
+
 where $\phi$ represents $U_x, U_y, U_z$
 
 Continuity equation
+
 $$
 \nabla \cdot\mathbf{u}=0
 $$

@@ -16,8 +16,8 @@ import DealExplicitField,Discretization
 
 if __name__ == '__main__':
     startTime = time.time()
-    workdir="C:\\Users\\ASUS\\Desktop\\airfoil"
-    # workdir = "C:\\Users\\cgu872\\Desktop\\airfoil"
+    # workdir="C:\\Users\\ASUS\\Desktop\\airfoil"
+    workdir = "C:\\Users\\cgu872\\Desktop\\airfoil"
     # workdir = "C:\\Users\\ASUS\\Desktop\\mesh7"
 
     #================1. Read Setting================#
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     pointN, faceN, InnerfaceN, BoundaryfaceN, elementN, elementBN, BoundaryTypeN,
     elementNeighbours, LinkFaces, elementFaces,
     faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes,
-    faceCF, faceCf, faceFf, faceWeights,wallDist,
+    faceCF, faceCf, faceFf, faceWeights,
     cellOwnFace,cellNeiFace]=ReadMesh.MeshDeal(workdir)
     endTime = time.time()
     costTime = (endTime - startTime) / 60.0
@@ -80,7 +80,7 @@ if __name__ == '__main__':
                 Discretization.Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,\
                             ownerdata,neighbourdata,cellOwnFace,cellNeiFace,faceSf,faceCF,faceWeights,\
                             faceCentroids,elementCentroids,elementVolumes,InnerfaceN,faceN,elementN,\
-                            elementNeighbours,LinkFaces,elementFaces,wallDist)
+                            elementNeighbours,LinkFaces,elementFaces,faceCf,boundarydata)
 
             # ---------------Continuity pressure correction p'--------------- #
             Coeffs = Initialization.Coeff(elementN, elementNeighbours)

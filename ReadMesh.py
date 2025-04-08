@@ -189,7 +189,6 @@ def MeshDeal(workdir):
         elementVolumes.append(totalVolume)
         elementCentroids.append(realCentroids)
     faceCF, faceCf, faceFf, faceWeights = [],[],[],[]
-    wallDist=np.zeros(faceN)
     for iface in range(0, InnerfaceN):
         n=faceSf[iface]/np.linalg.norm(faceSf[iface], ord=2)
         own=ownerdata[iface]
@@ -204,10 +203,9 @@ def MeshDeal(workdir):
         faceCF.append(faceCentroids[iface]-elementCentroids[own]) #no F in the boundary
         faceCf.append(faceCentroids[iface] - elementCentroids[own])
         faceWeights.append(1.0)
-        wallDist[iface]=np.sum(faceCf[iface]*n)
     return (pointdata, facedata, ownerdata, neighbourdata, boundarydata,
             pointN,faceN,InnerfaceN,BoundaryfaceN,elementN,elementBN,BoundaryTypeN,
             elementNeighbours, LinkFaces, elementFaces,
             faceCentroids,faceSf,faceAreas,elementCentroids, elementVolumes,
-            faceCF, faceCf, faceFf, faceWeights,wallDist,
+            faceCF, faceCf, faceFf, faceWeights,
             cellOwnFace,cellNeiFace)

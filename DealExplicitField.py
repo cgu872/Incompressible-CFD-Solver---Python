@@ -57,7 +57,7 @@ def Gradient(schemes,field,elementN,InnerfaceN,ownerdata,neighbourdata,boundaryd
                 CB=np.array(faceCf[startFace:startFace+nFaces])
                 distance_CB=np.linalg.norm(CB,axis=1)[:,np.newaxis]
                 e_CB=CB / np.linalg.norm(CB,axis=1)[:,np.newaxis]
-                if Btype=='symmetry' or Btype=='empty':
+                if Btype=='symmetry' or Btype=='empty' or Btype=='zeroGradient':
                     phiGradBound=np.zeros((nFaces,np.size(phiGradCell,axis=1)))
                 else:
                     phiGradBound=(phiGradCell[own_b]-np.sum(phiGradCell[own_b]*e_CB, axis=0)*e_CB

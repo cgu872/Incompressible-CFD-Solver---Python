@@ -8,9 +8,8 @@ import Initialization,Interpolate
 def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
              ownerdata, neighbourdata,cellOwnFace,cellNeiFace,faceSf,faceCF,faceWeights,
              faceCentroids,elementCentroids,elementVolumes,InnerfaceN,faceN,elementN,
-             elementNeighbours,LinkFaces,elementFaces,wallDist):
+             elementNeighbours,LinkFaces,elementFaces,faceCf,boundarydata):
     MomentumTerms = ['Convection', 'Diffusion', 'PressureGradient', 'FalseTransient']
-    MomentumTerms = ['Diffusion', 'PressureGradient', 'FalseTransient']
     phi=Ufield.phi[:,iComponent,np.newaxis]
     own = ownerdata
     nei = neighbourdata
@@ -20,7 +19,7 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             Fluxes = Initialization.Flux(faceN, elementN)
             Fluxes.FluxCf = np.maximum(mdot_f,0)
             Fluxes.FluxFf = -np.maximum(-mdot_f, 0)
-            Fluxes.FluxTf = Fluxes.FluxCf*phi[own] + Fluxes.FluxFf*phi_nei + Fluxes.FluxVf
+            Fluxes.FluxTf = Fluxes.FluxCf*phi[own] + Fluxes.FluxFf*phi_nei
             if fvSchemes['divSchemes'] == 'Gauss upwind':
                 continue
             elif fvSchemes['divSchemes']=='Gauss linear': #only internal faces,means no deferred correction for boundary
@@ -69,6 +68,7 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
                 Coeffs.bc[icell]=Coeffs.bc[icell]-Fluxes.FluxT[icell]
         elif terms=='Diffusion':
             Fluxes = Initialization.Flux(faceN, elementN)
+            mu=mufield.phi[0]
             #--------internal faces 系数ac,anb都不会变，迭代过程中可省略
             Sf=np.array(faceSf[0:InnerfaceN])
             magSf=np.linalg.norm(Sf, axis=1, ord=2)[:,np.newaxis]
@@ -80,7 +80,6 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             gradphi = Ufield.gradphi[iComponent][0:elementN]
             phiGrad_f = Interpolate.GradientElementsToFaces('linear', gradphi,phi[0:elementN], \
                         own[0:InnerfaceN], nei, faceCF[0:InnerfaceN],faceWeights[0:InnerfaceN])
-            mu=mufield.phi[0]
             #decomposition of SF
             NonOrthogonalScheme='Over-Relaxed Approach'
             if NonOrthogonalScheme=='Over-Relaxed Approach':
@@ -98,26 +97,39 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             geoDiff_f = np.linalg.norm(Ef, axis=1, ord=2)[:,np.newaxis]/d_CF
             Fluxes.FluxCf[0:InnerfaceN] = mu * geoDiff_f
             Fluxes.FluxFf[0:InnerfaceN] = -mu * geoDiff_f
-            # Fluxes.FluxVf[0:InnerfaceN] = -mu * np.einsum('ij,ij->i',phiGrad_f,Tf)[:,np.newaxis]
-            # Fluxes.FluxTf[0:InnerfaceN] = (Fluxes.FluxCf[0:InnerfaceN]*phi[own[0:InnerfaceN]]+Fluxes.FluxFf[0:InnerfaceN]*phi[nei]+Fluxes.FluxVf[0:InnerfaceN])
             Fluxes.FluxTf = mu*np.einsum('ij,ij->i',np.vstack((phiGrad_f,Ufield.gradphi[iComponent][elementN:])),np.array(faceSf))[:,np.newaxis]
+            #--------boundary faces
+            NumberBPatches = len(boundarydata)
+            for iBPatch in range(0, NumberBPatches):
+                theBCInfo = boundarydata[iBPatch]
+                PatchDefine = Ufield.initialfield['boundaryField'][theBCInfo['name']]
+                NumberBFaces = int(theBCInfo['nFaces'])
+                iFaceStart = int(theBCInfo['startFace'])
+                iFaceEnd = iFaceStart + NumberBFaces
+                iElementStart = elementN + iFaceStart - InnerfaceN
+                iElementEnd = iElementStart + NumberBFaces
+                if PatchDefine['type'] == 'fixedValue' or PatchDefine['type'] == 'noSlip':
+                    magSf_b = np.linalg.norm(np.array(faceSf[iFaceStart:iFaceEnd]), axis=1, ord=2)[:,np.newaxis]
+                    magCf_b =np.linalg.norm(np.array(faceCf[iFaceStart:iFaceEnd]), axis=1, ord=2)[:, np.newaxis]
+                    valueset = mu*magSf_b/magCf_b
+                    Fluxes.FluxCf[iFaceStart:iFaceEnd] = valueset
+                    Fluxes.FluxTf[iFaceStart:iFaceEnd] = Fluxes.FluxTf[iFaceStart:iFaceEnd]+valueset*phi[iElementStart:iElementEnd]
+                #zeroGradient,symmetry,empty have no effects
             for icell in range(0, elementN):
-                Coeffs.ac[icell] = Coeffs.ac[icell] + np.sum(Fluxes.FluxCf[LinkFaces[icell]], axis=0)
+                Coeffs.ac[icell] = Coeffs.ac[icell] + np.sum(Fluxes.FluxCf[elementFaces[icell]], axis=0)
                 #ac are all +, means np.sum(mu * geoDiff_f[LinkFaces[icell]])
                 AroundFace = LinkFaces[icell]
                 for idx, inei in enumerate(AroundFace):
                     Coeffs.anb[icell][idx] = Coeffs.anb[icell][idx]+Fluxes.FluxFf[inei]
                 Coeffs.bc[icell] = Coeffs.bc[icell] + np.sum(Fluxes.FluxTf[cellOwnFace[icell]], axis=0)-np.sum(Fluxes.FluxTf[cellNeiFace[icell]], axis=0)
-            #--------boundary faces
-
         elif terms == 'PressureGradient':
             Fluxes = Initialization.Flux(faceN, elementN)
             p_grad=pfield.gradphi[0]
             volume = np.array(elementVolumes)[:,np.newaxis]
-            Fluxes.FluxT = volume*p_grad[0:elementN,iComponent,np.newaxis] #∂p/∂x分别对应于ux处理
+            Fluxes.FluxT = volume*p_grad[0:elementN,iComponent,np.newaxis] #∂p/∂x分别对应于ux处理,显式计算
             Coeffs.bc=Coeffs.bc-Fluxes.FluxT
-        elif terms == 'FalseTransient':
-            Fluxes = Initialization.Flux(faceN, elementN)
+        elif terms == 'FalseTransient': #Implicit Under-Relaxation Methods
+            Fluxes = Initialization.Flux(faceN, elementN) #a modification of the Euler first order implicit transient method
             volume = np.array(elementVolumes)[:, np.newaxis]
             phi_old=Ufield.prevTimeStep[0:elementN,iComponent, np.newaxis]
             rho = rhofield.phi[0:elementN]
@@ -126,10 +138,12 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             Fluxes.FluxC = volume * rho /falseDeltaT
             Fluxes.FluxC_old = - volume * rho_old /falseDeltaT
             Fluxes.FluxT = Fluxes.FluxC*phi[0:elementN]+Fluxes.FluxC_old*phi_old
+            Coeffs.ac = Coeffs.ac + Fluxes.FluxC
+            Coeffs.bc = Coeffs.bc-Fluxes.FluxT #减去local_FluxC*phi还是因为构成残差形式
         elif terms == 'Transient':
             Fluxes = Initialization.Flux(faceN, elementN)
             sys.exit("Undefined Transient Scheme")
-        elif terms == 'Source': #压力梯度以外的体积力源项
+        elif terms == 'Source': #压力梯度以外的体积力源项 body force term
             Fluxes = Initialization.Flux(faceN, elementN)
             bodyforce=9.8 #暂定，未知
             volume = np.array(elementVolumes)[:, np.newaxis]

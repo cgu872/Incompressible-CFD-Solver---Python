@@ -16,10 +16,10 @@ $$
 $$
 
 Firstly, we will read the setting files<br>
-calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights
-initialize fields, Ufield,pfield
-set the boundary condition on the fields
-calculate the mass flux
-calculate the cell gradients and boundary face gradients
-discrete the Momentum equation, and solve
-discrete the Continuity equation, and solve
+calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights<br>
+initialize fields, Ufield,pfield<br>
+set the boundary condition on the fields<br>
+calculate the mass flux<br>
+calculate the cell gradients and boundary face gradients<br>
+discrete the Momentum equation, and solve<br>
+discrete the Continuity equation, and solve<br>

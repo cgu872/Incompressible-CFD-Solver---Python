@@ -15,7 +15,7 @@ $$
 \nabla \cdot\mathbf{u}=0
 $$
 
-Firstly, we will read the setting files\n
+Firstly, we will read the setting files<br>
 calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights
 initialize fields, Ufield,pfield
 set the boundary condition on the fields

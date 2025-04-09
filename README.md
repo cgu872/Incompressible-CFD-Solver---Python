@@ -26,3 +26,7 @@ Programming process:<br>
 7. discrete the Momentum equation, and solve<br>
 8. discrete the Continuity equation, and solve<br>
 9. iterations and Residuals
+
+
+Discretization of convective term and diffusion term in the Momentum equation.<br>
+In 

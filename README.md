@@ -16,12 +16,13 @@ $$
 $$
 
 
-Programming process:
-Firstly, we will read the setting files<br>
-calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights<br>
-initialize fields, Ufield,pfield<br>
-set the boundary condition on the fields<br>
-calculate the mass flux<br>
-calculate the cell gradients and boundary face gradients<br>
-discrete the Momentum equation, and solve<br>
-discrete the Continuity equation, and solve<br>
+Programming process:<br>
+1. Firstly, read the setting files<br>
+2. calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights<br>
+3. initialize fields, like Ufield,pfield<br>
+4. set the boundary condition on the fields<br>
+5. calculate the mass flux<br>
+6. calculate the cell gradients and boundary face gradients<br>
+7. discrete the Momentum equation, and solve<br>
+8. discrete the Continuity equation, and solve<br>
+9. iterations and Residuals

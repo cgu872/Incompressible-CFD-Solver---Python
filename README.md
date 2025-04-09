@@ -1,10 +1,10 @@
 # Incompressible-CFD-Solver---Python
-solve the imcompressible, isothermal, Newtonian fluids N-S equation (with constant viscosity flow and no energy equation)
+Solve the imcompressible, isothermal, Newtonian fluids N-S equation (with constant viscosity flow and no energy equation)
 
 Momentum equation
 
 $$
-\frac{\partial(\rho \phi)}{\partial t}+\nabla \cdot(\rho \mathbf{u} \phi)=\nabla \cdot\left(\mu \nabla \phi\right)+Q^\phi-\nabla p
+\underbrace{\frac{\partial(\rho \phi)}{\partial t}}_{\text {transient term }}+\underbrace{\nabla \cdot(\rho \mathbf{u} \phi)}_{\text {convective term }}=\nabla \cdot\left(\mu \nabla \phi\right)+Q^\phi-\nabla p
 $$
 
 where $\phi$ represents $U_x, U_y, U_z$. $\Gamma^\phi$ can be directly replaced with constant dynamic viscosity $\mu$. And $Q^\phi$ is generally setted as 0.
@@ -15,6 +15,8 @@ $$
 \nabla \cdot\mathbf{u}=0
 $$
 
+
+Programming process:
 Firstly, we will read the setting files<br>
 calculate the mesh data, like faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes, faceCF, faceCf, faceFf, faceWeights<br>
 initialize fields, Ufield,pfield<br>

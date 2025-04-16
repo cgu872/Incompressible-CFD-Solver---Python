@@ -1,5 +1,5 @@
 # Incompressible-CFD-Solver---Python
-Solve the imcompressible, isothermal, Newtonian fluids N-S equation (with constant viscosity flow and no energy equation)
+In this project, I want to show how to Solve the imcompressible, isothermal, Newtonian fluids N-S equation (with constant viscosity flow and no energy equation) and explain the related theories. Help understand how the CFD software works.
 
 Momentum equation
 

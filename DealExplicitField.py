@@ -61,7 +61,7 @@ def Gradient(schemes,field,elementN,InnerfaceN,ownerdata,neighbourdata,boundaryd
                     phiGradBound=np.zeros((nFaces,np.size(phiGradCell,axis=1)))
                 else:
                     phiGradBound=(phiGradCell[own_b]-np.sum(phiGradCell[own_b]*e_CB, axis=0)*e_CB
-                                  +(phi_f[startFace:startFace+nFaces]-phi_f2[own_b])/distance_CB*e_CB)
+                                  +(phi_f[startFace:startFace+nFaces,icomponent,np.newaxis]-phi_f2[own_b])/distance_CB*e_CB)
                 phiGradCell=np.vstack((phiGradCell,phiGradBound))
             phiGrad.append(phiGradCell)
     else:

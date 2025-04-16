@@ -60,9 +60,9 @@ class setfield(object):
                     self.phi[iElementStart:iElementEnd] = valueset[1]
                 else:
                     print('To be supplemented')
-            elif (PatchDefine['type']=='zeroGradient' or PatchDefine['type'] == 'empty'):
+            elif (PatchDefine['type']=='zeroGradient'):
                 self.phi[iElementStart:iElementEnd] = self.phi[ownerdata[iFaceStart:iFaceEnd]]
-            elif (PatchDefine['type'] == 'symmetry'):
+            elif (PatchDefine['type'] == 'symmetry' or PatchDefine['type'] == 'empty'):
                 own = ownerdata[iFaceStart:iFaceEnd]
                 if self.name=='U':
                     unitSf=unitVector(faceSf,iFaceStart,iFaceEnd)

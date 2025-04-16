@@ -5,20 +5,19 @@ import time
 import sys,re,os
 import numpy as np
 from itertools import islice
-from numba import jit
+# from numba import jit
 import pandas as pd
 import csv,json,math
 import copy
-import ReadMesh, ReadSolver, ReadTimefile, ReadProperties
+import ReadMesh1, ReadSolver, ReadTimefile, ReadProperties
 import Interpolate, Initialization, Writelog
-import DealExplicitField,Discretization
+import DealExplicitField,Discretization,AlgebraicSolve,UpdateField
 
 
 if __name__ == '__main__':
     startTime = time.time()
     # workdir="C:\\Users\\ASUS\\Desktop\\airfoil"
     workdir = "C:\\Users\\cgu872\\Desktop\\airfoil"
-    # workdir = "C:\\Users\\ASUS\\Desktop\\mesh7"
 
     #================1. Read Setting================#
     #------------------1.1 Read Mesh--------------------#
@@ -27,7 +26,7 @@ if __name__ == '__main__':
     elementNeighbours, LinkFaces, elementFaces,
     faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes,
     faceCF, faceCf, faceFf, faceWeights,
-    cellOwnFace,cellNeiFace]=ReadMesh.MeshDeal(workdir)
+    cellOwnFace,cellNeiFace]=ReadMesh1.MeshDeal(workdir)
     endTime = time.time()
     costTime = (endTime - startTime) / 60.0
     print("Reading mesh cost %.3f minutes" % costTime)
@@ -71,19 +70,27 @@ if __name__ == '__main__':
             CurrentTime=CurrentTime+float(controlDict['deltaT'])
             Writelog.IterInfo(IterationsN)
             # Updates U, p, mdot_f
-            Ufield.prevIter=copy.deepcopy(Ufield.phi)
+            Ufield.prevIter = copy.deepcopy(Ufield.phi)
             pfield.prevIter = copy.deepcopy(pfield.phi)
             mdot_f_prevIter = copy.deepcopy(mdot_f)
             # ---------------Momentum Ux,Uy,Uz--------------- #
             for iComponent in range(0,3):
                 Coeffs = Initialization.Coeff(elementN, elementNeighbours)
-                Discretization.Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,\
+                Discretization.Momentum(iComponent,fvSchemes,fvSolution,\
+                            Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,\
                             ownerdata,neighbourdata,cellOwnFace,cellNeiFace,faceSf,faceCF,faceWeights,\
                             faceCentroids,elementCentroids,elementVolumes,InnerfaceN,faceN,elementN,\
                             elementNeighbours,LinkFaces,elementFaces,faceCf,boundarydata)
-
+                AlgebraicSolve.solvers(Coeffs,elementN,elementNeighbours,\
+                                       fvSolution['solvers']['U'],Ufield,iComponent)
+            UpdateField.UField(Ufield,elementN,InnerfaceN,faceSf,ownerdata,boundarydata)
+            DealExplicitField.Gradient(fvSchemes['gradSchemes'], Ufield, elementN, InnerfaceN, ownerdata, neighbourdata,
+                                       boundarydata,faceSf, faceWeights, elementVolumes, cellOwnFace, cellNeiFace, faceCf, faceFf)
             # ---------------Continuity pressure correction p'--------------- #
-            Coeffs = Initialization.Coeff(elementN, elementNeighbours)
+            for iComponent in range(0,1):
+                Coeffs = Initialization.Coeff(elementN, elementNeighbours)
+                # AlgebraicSolve.solvers(Coeffs,elementN,elementNeighbours,\
+                #                        fvSolution['solvers']['p'],pfield,iComponent))
 
             IterTime2 = time.time()
             costTime = (IterTime2 - IterTime1) / 60.0

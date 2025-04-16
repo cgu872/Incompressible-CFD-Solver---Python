@@ -5,21 +5,36 @@ import sys
 import numpy as np
 import Initialization,Interpolate
 
-def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
+def Momentum(iComponent,fvSchemes,fvSolution,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
              ownerdata, neighbourdata,cellOwnFace,cellNeiFace,faceSf,faceCF,faceWeights,
              faceCentroids,elementCentroids,elementVolumes,InnerfaceN,faceN,elementN,
              elementNeighbours,LinkFaces,elementFaces,faceCf,boundarydata):
-    MomentumTerms = ['Convection', 'Diffusion', 'PressureGradient', 'FalseTransient']
+    MomentumTerms = ['Convection', 'Diffusion', 'PressureGradient']
+    UnderRelaxation='FalseTransient'
     phi=Ufield.phi[:,iComponent,np.newaxis]
     own = ownerdata
     nei = neighbourdata
     for terms in MomentumTerms:
         if terms=='Convection':
-            phi_nei=np.vstack((phi[nei], phi[elementN:]))
             Fluxes = Initialization.Flux(faceN, elementN)
-            Fluxes.FluxCf = np.maximum(mdot_f,0)
-            Fluxes.FluxFf = -np.maximum(-mdot_f, 0)
-            Fluxes.FluxTf = Fluxes.FluxCf*phi[own] + Fluxes.FluxFf*phi_nei
+            #--------implicit one order Upwind internal faces phi_f
+            Fluxes.FluxCf[0:InnerfaceN] = np.maximum(mdot_f[0:InnerfaceN],0)
+            Fluxes.FluxFf[0:InnerfaceN] = -np.maximum(-mdot_f[0:InnerfaceN], 0)
+            #--------implicit one order Upwind boundary faces phi_f
+            NumberBPatches = len(boundarydata)
+            for iBPatch in range(0, NumberBPatches):
+                theBCInfo = boundarydata[iBPatch]
+                PatchDefine = Ufield.initialfield['boundaryField'][theBCInfo['name']]
+                NumberBFaces = int(theBCInfo['nFaces'])
+                iFaceStart = int(theBCInfo['startFace'])
+                iFaceEnd = iFaceStart + NumberBFaces
+                if PatchDefine['type'] == 'zeroGradient':
+                    Fluxes.FluxCf[iFaceStart:iFaceEnd] = mdot_f[iFaceStart:iFaceEnd]
+            #--------explicit one order Upwind internal faces Tf for its owner (defined as bc-Tf)
+            Fluxes.FluxTf[0:InnerfaceN] = Fluxes.FluxCf[0:InnerfaceN]*phi[own[0:InnerfaceN]] + Fluxes.FluxFf[own[0:InnerfaceN]]*phi[nei]
+            #--------explicit boundary faces Tf for its owner
+            Fluxes.FluxTf[InnerfaceN:faceN] = mdot_f[InnerfaceN:faceN] * phi[own[InnerfaceN:faceN]]
+            #--------explicit high oder internal faces Tf
             if fvSchemes['divSchemes'] == 'Gauss upwind':
                 continue
             elif fvSchemes['divSchemes']=='Gauss linear': #only internal faces,means no deferred correction for boundary
@@ -50,6 +65,7 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
                 Fluxes.FluxTf[0:InnerfaceN] = Fluxes.FluxTf[0:InnerfaceN] + dc_HO
             else:
                 sys.exit("Undefined Convection Scheme: "+fvSchemes['divSchemes'])
+            #--------assemble matrix based on cells, bounary FluxCf and FluxFf should be zero except zeroGradient
             for icell in range(0,elementN):
                 Coeffs.ac[icell]=Coeffs.ac[icell]+np.sum(Fluxes.FluxCf[cellOwnFace[icell]], axis=0)-np.sum(Fluxes.FluxFf[cellNeiFace[icell]],axis=0)
                 AroundFace = LinkFaces[icell]
@@ -72,11 +88,9 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             #--------internal faces 系数ac,anb都不会变，迭代过程中可省略
             Sf=np.array(faceSf[0:InnerfaceN])
             magSf=np.linalg.norm(Sf, axis=1, ord=2)[:,np.newaxis]
-            # e_Sf= Sf / magSf
             CF= np.array(faceCF[0:InnerfaceN])
             d_CF=np.linalg.norm(CF, axis=1, ord=2)[:,np.newaxis]
             e_CF = CF / d_CF
-            # CF_limited=np.maximum(np.einsum('ij,ij->i',e_Sf,CF),0.05*np.linalg.norm(CF, axis=1, ord=2))
             gradphi = Ufield.gradphi[iComponent][0:elementN]
             phiGrad_f = Interpolate.GradientElementsToFaces('linear', gradphi,phi[0:elementN], \
                         own[0:InnerfaceN], nei, faceCF[0:InnerfaceN],faceWeights[0:InnerfaceN])
@@ -111,6 +125,7 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
                 if PatchDefine['type'] == 'fixedValue' or PatchDefine['type'] == 'noSlip':
                     magSf_b = np.linalg.norm(np.array(faceSf[iFaceStart:iFaceEnd]), axis=1, ord=2)[:,np.newaxis]
                     magCf_b =np.linalg.norm(np.array(faceCf[iFaceStart:iFaceEnd]), axis=1, ord=2)[:, np.newaxis]
+                    magCf_b = magCf_b*np.array(faceSf[iFaceStart:iFaceEnd])/magSf_b # for Non-orthogonal Grids
                     valueset = mu*magSf_b/magCf_b
                     Fluxes.FluxCf[iFaceStart:iFaceEnd] = valueset
                     Fluxes.FluxTf[iFaceStart:iFaceEnd] = Fluxes.FluxTf[iFaceStart:iFaceEnd]+valueset*phi[iElementStart:iElementEnd]
@@ -128,18 +143,6 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
             volume = np.array(elementVolumes)[:,np.newaxis]
             Fluxes.FluxT = volume*p_grad[0:elementN,iComponent,np.newaxis] #∂p/∂x分别对应于ux处理,显式计算
             Coeffs.bc=Coeffs.bc-Fluxes.FluxT
-        elif terms == 'FalseTransient': #Implicit Under-Relaxation Methods
-            Fluxes = Initialization.Flux(faceN, elementN) #a modification of the Euler first order implicit transient method
-            volume = np.array(elementVolumes)[:, np.newaxis]
-            phi_old=Ufield.prevTimeStep[0:elementN,iComponent, np.newaxis]
-            rho = rhofield.phi[0:elementN]
-            rho_old = rhofield.prevTimeStep[0:elementN]
-            falseDeltaT = 1e6
-            Fluxes.FluxC = volume * rho /falseDeltaT
-            Fluxes.FluxC_old = - volume * rho_old /falseDeltaT
-            Fluxes.FluxT = Fluxes.FluxC*phi[0:elementN]+Fluxes.FluxC_old*phi_old
-            Coeffs.ac = Coeffs.ac + Fluxes.FluxC
-            Coeffs.bc = Coeffs.bc-Fluxes.FluxT #减去local_FluxC*phi还是因为构成残差形式
         elif terms == 'Transient':
             Fluxes = Initialization.Flux(faceN, elementN)
             sys.exit("Undefined Transient Scheme")
@@ -152,6 +155,23 @@ def Momentum(iComponent,fvSchemes,Ufield,pfield,mdot_f,mufield,rhofield,Coeffs,
         else:
             sys.exit('Undefined discretization terms')
 
+    # Implicit Under-Relaxation Methods
+    if UnderRelaxation == 'Patankar':
+        Coeffs.ac = Coeffs.ac/fvSolution['relaxationFactors']['equations'][Ufield.name]
+    elif UnderRelaxation == 'FalseTransient':
+        Fluxes = Initialization.Flux(faceN,elementN)  # a modification of the Euler first order implicit transient method
+        volume = np.array(elementVolumes)[:, np.newaxis]
+        phi_old = Ufield.prevTimeStep[0:elementN, iComponent, np.newaxis]
+        rho = rhofield.phi[0:elementN]
+        rho_old = rhofield.prevTimeStep[0:elementN]
+        falseDeltaT = 1e5
+        Fluxes.FluxC = volume * rho / falseDeltaT
+        Fluxes.FluxC_old = - volume * rho_old / falseDeltaT
+        Fluxes.FluxT = Fluxes.FluxC * phi[0:elementN] + Fluxes.FluxC_old * phi_old
+        Coeffs.ac = Coeffs.ac + Fluxes.FluxC
+        Coeffs.bc = Coeffs.bc - Fluxes.FluxT  # 减去local_FluxC*phi还是因为构成残差形式
+    else:
+        print('No Under-Relaxation')
 
 def Continuity():
     1+1

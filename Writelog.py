@@ -39,3 +39,8 @@ def IterInfo(IterationsN):
 
 def IterTime(costTime):
     logging.info("This Iter cost %.3f minutes\n" % costTime)
+
+def ResInfo(maxRes,rmsRes,initialRes,finalRes,fieldname,iComponent):
+    comp = ['x', 'y', 'z']
+    logging.info("|    "+fieldname+"-"+comp[iComponent]+"     |  %.3e  |  %.3e  |    %.3e    |   %.3e   |"
+                 ,maxRes,rmsRes,initialRes,finalRes)

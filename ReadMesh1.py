@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 # @data 2025/3/17
-# @file ReadMesh.py without numba
-import copy
+# @file ReadMesh.py with @jit(nopython=True)
+
 import sys,re,os
 import numpy as np
 from itertools import islice
-# from numba import jit
+from numba import jit, typed
 
-# @jit(nopython=True)
 def MeshDeal(workdir):
     os.chdir(workdir)
 
@@ -93,14 +92,24 @@ def MeshDeal(workdir):
             bound_dict['name'] = bound_name
             boundarydata.append(bound_dict)
     del lines, file, match, matches
+    elementNeighbours, LinkFaces, elementFaces,cellOwnFace,cellNeiFace = MeshArrange(np.array(ownerdata), np.array(neighbourdata),elementN,InnerfaceN)
+    faceCentroids, faceSf, faceAreas = MeshCal1(np.array(pointdata), typed.List(facedata), np.array(ownerdata),typed.List(elementFaces),faceN,elementN)
+    elementCentroids, elementVolumes = MeshCal2(typed.List(elementFaces),np.array(faceCentroids),np.array(faceSf),elementN)
+    faceCF, faceCf, faceFf, faceWeights = MeshCal3(ownerdata, neighbourdata,elementCentroids, faceCentroids, faceSf, InnerfaceN,BoundaryfaceN)
+    return (pointdata, facedata, ownerdata, neighbourdata, boundarydata,
+            pointN, faceN, InnerfaceN, BoundaryfaceN, elementN, elementBN, BoundaryTypeN,
+            elementNeighbours, LinkFaces, elementFaces,
+            faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes,
+            faceCF, faceCf, faceFf, faceWeights,
+            cellOwnFace, cellNeiFace)
 
+@jit(nopython=True)
+def MeshArrange(ownarray, neiarray,elementN,InnerfaceN):
     # 2.-------------------------------------------------------#
     # rewrite data based on cell index
     # elementFaces，elementNeighbours
     # upperAnbCoeffIndex, lowerAnbCoeffIndex
     # -------------------------------------------------------#
-    ownarray=np.array(ownerdata)
-    neiarray=np.array(neighbourdata)
     elementFaces,elementNeighbours=[],[]
     LinkFaces=[]
     cellOwnFace,cellNeiFace=[],[]
@@ -118,36 +127,10 @@ def MeshDeal(workdir):
         elementFaces.append(allfaces)
         LinkFaces.append(innerfaces)
         elementNeighbours.append(neicells)
-    '''
-    elementNeighbours=[[] for _ in range(elementN)]
-    elementFaces=[[] for _ in range(elementN)]
-    for iface in range(0,InnerfaceN):
-        own=ownerdata[iface]
-        nei=neighbourdata[iface]
-        elementNeighbours[own].append(nei) #the face index owned by cell
-        elementNeighbours[nei].append(own) #the cell index near cell
-        elementFaces[own].append(iface)    #比如根据cell编号找周围的面构成[facedata[i] for i in elementFaces[0]]
-        elementFaces[nei].append(iface)
-    LinkFaces=copy.deepcopy(elementFaces)
-    for iface in range(InnerfaceN, faceN):
-        own = ownerdata[iface]
-        elementFaces[own].append(iface)   #boundary faces in cell
-    cellOwnFace = [np.where(np.array(ownerdata)==icell)[0] for icell in range(0,elementN)]
-    cellNeiFace = [np.where(np.array(neighbourdata)==icell)[0] for icell in range(0,elementN)]
-    '''
-    '''
-    upperAnbCoeffIndex=[[] for _ in range(InnerfaceN)]#记录了每个内部面在其owner的elementNeighbours中的编号
-    lowerAnbCoeffIndex=[[] for _ in range(InnerfaceN)]#在其neighbour的elementNeighbours中的编号
-    index=np.where(np.array(elementNeighbours[own])==nei)
-    anb[own][index]= + FluxFf(iFace)
-    index=np.where(np.array(elementNeighbours[nei])==own)
-    anb[nei][index]= - FluxFf(iFace)
-    # cell 包含的point
-    elementNodes = [[] for _ in range(elementN)]
-    for icell in range(0,elementN):
-        [facedata[i] for i in elementFaces[icell]]
-    '''
+    return elementNeighbours, LinkFaces, elementFaces,cellOwnFace,cellNeiFace
 
+@jit(nopython=True)
+def MeshCal1(pointarray, facedata,ownerdata,elementFaces,faceN,elementN):
     # 3.-------------------------------------------------------#
     # calculate face Centroids,face normal vector, Areas, Cell Centroids,Volumes
     # faceCentroids, faceSf, faceAreas, elementCentroids, elementVolumes
@@ -155,39 +138,47 @@ def MeshDeal(workdir):
     # -------------------------------------------------------#
     faceCentroids,faceSf,faceAreas=[],[],[]
     for iface in range(0, faceN):
-        centroid = np.zeros(3)
-        Sf = np.zeros(3)#surface normal vector
-        area = 0
         NodeIndex=facedata[iface]
-        local_centre = np.zeros(3) #rough face centroid
-        for iNode in NodeIndex:
-            local_centre = local_centre + pointdata[iNode]
-        local_centre=local_centre/len(NodeIndex)
-        line=[pointdata[iTriangle]-local_centre for iTriangle in NodeIndex]
-        line.append(line[0])
-        point=[pointdata[iTriangle] for iTriangle in NodeIndex]
-        point.append(point[0])
-        local_Sf = [0.5 * np.cross(line[iline], line[iline+1]) for iline in range(0,len(NodeIndex))]
-        local_centroid=[(local_centre+point[iline]+point[iline+1])/3 for iline in range(0,len(NodeIndex))]
+        # rough face centroid
+        local_centre = np.sum(pointarray[NodeIndex],0)/len(NodeIndex)
+        point = pointarray[NodeIndex]
+        line = point - local_centre
+        line = np.vstack((line,line[0,:].reshape(1, -1)))
+        point = np.vstack((point, point[0, :].reshape(1, -1)))
+        local_Sf,local_centroid=np.empty((0,3)),np.empty((0,3))
+        for iline in range(0,len(NodeIndex)):
+            local_Sf=np.vstack((local_Sf,0.5 * np.cross(line[iline], line[iline+1]).reshape(1, -1)))
+            local_centroid=np.vstack((local_centroid,(local_centre+point[iline]+point[iline+1]).reshape(1, -1)/3))
+        #surface normal vector
         Sf = np.sum(local_Sf,0)
         area=np.linalg.norm(Sf, ord=2) #Euclidean norm
-        centroid=[np.linalg.norm(local_Sf[iTriangle], ord=2)*local_centroid[iTriangle] for iTriangle in range(0,len(NodeIndex))]
-        centroid=np.sum(centroid,0)/area
+        centroid = np.zeros((3,))
+        for ipart in range(0,len(NodeIndex)):
+            centroid=centroid+np.linalg.norm(local_Sf[ipart],ord=2) * local_centroid[ipart]
+        centroid = centroid/area
         faceCentroids.append(centroid)
         faceSf.append(Sf)
         faceAreas.append(area)
+    return faceCentroids, faceSf, faceAreas
+
+@jit(nopython=True)
+def MeshCal2(elementFaces,faceCentroids,faceSf,elementN):
     elementCentroids, elementVolumes = [], []
     for icell in range(0, elementN):
         FaceIndex = elementFaces[icell]
-        local_centre=np.average([faceCentroids[i] for i in FaceIndex], 0) #rough cell centroid
-        Cf=[faceCentroids[i] - local_centre for i in FaceIndex]
-        local_Sf=[faceSf[i] if icell == ownerdata[i] else -faceSf[i] for i in FaceIndex]
-        localVolume = [np.dot(local_Sf[i],Cf[i])/3 for i in range(0, len(FaceIndex))]
-        totalVolume = np.sum(localVolume,0)
-        localCentroid = [0.75 * faceCentroids[i] + 0.25 * local_centre for i in FaceIndex]
-        realCentroids=np.sum([localCentroid[i]*localVolume[i] for i in range(0, len(FaceIndex))],0)/totalVolume
-        elementVolumes.append(totalVolume)
+        AroFaceCen=faceCentroids[FaceIndex]
+        local_centre = np.sum(AroFaceCen,0)/len(FaceIndex)
+        Cf=AroFaceCen-local_centre
+        local_Sf = faceSf[FaceIndex]
+        localVolume = np.abs(np.sum(local_Sf*Cf,1))/3
+        totalVolume = np.sum(localVolume)
+        localCentroid=0.75 * AroFaceCen + 0.25 * local_centre
+        realCentroids=np.sum(localCentroid*localVolume.reshape(-1,1),0)/totalVolume
         elementCentroids.append(realCentroids)
+        elementVolumes.append(totalVolume)
+    return elementCentroids, elementVolumes
+
+def MeshCal3(ownerdata, neighbourdata,elementCentroids, faceCentroids, faceSf, InnerfaceN,BoundaryfaceN):
     faceCF, faceCf, faceFf, faceWeights = [],[],[],[]
     for iface in range(0, InnerfaceN):
         n=faceSf[iface]/np.linalg.norm(faceSf[iface], ord=2)
@@ -198,14 +189,9 @@ def MeshDeal(workdir):
         faceFf.append(faceCentroids[iface] - elementCentroids[nei])
         faceWeights.append(np.dot(faceCf[iface],n)/(np.dot(faceCf[iface],n) - np.dot(faceFf[iface],n)))
     for iface in range(InnerfaceN, InnerfaceN+BoundaryfaceN):
-        n = faceSf[iface] / np.linalg.norm(faceSf[iface], ord=2)
         own = ownerdata[iface]
         faceCF.append(faceCentroids[iface]-elementCentroids[own]) #no F in the boundary
         faceCf.append(faceCentroids[iface] - elementCentroids[own])
         faceWeights.append(1.0)
-    return (pointdata, facedata, ownerdata, neighbourdata, boundarydata,
-            pointN,faceN,InnerfaceN,BoundaryfaceN,elementN,elementBN,BoundaryTypeN,
-            elementNeighbours, LinkFaces, elementFaces,
-            faceCentroids,faceSf,faceAreas,elementCentroids, elementVolumes,
-            faceCF, faceCf, faceFf, faceWeights,
-            cellOwnFace,cellNeiFace)
+    return faceCF, faceCf, faceFf, faceWeights
+

@@ -97,7 +97,7 @@ $$
 $$
 
 where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the intermediate velocity filed $\mathbf{u}^\*$ in cells.<br>
-What we need to do is just represent $\dot{m_f}^{\prime}$ in terms of $u', p'$
+What we need to do is just represent $\dot{m_f}^{\prime}$ in the faces by $u', p'$ in the cells, because we want to implicitlt discrete it.
 
 According to the Rhie-Chow interpolation, the velocity in the faces can be listed as follows:
 
@@ -108,4 +108,8 @@ $$
 \end{aligned}
 $$
 
+Subtracting these euqations, we can get the relationship between the correct velocity in the faces and cells:
 
+$$
+\mathbf{u}_f^{\prime} = \overline{\mathbf{u}_f^{\prime}}-\overline{\mathbf{D}_f}(\nabla p_f^{\prime}-\overline{\nabla p_f^{\prime}}) \tag{2.2}
+$$

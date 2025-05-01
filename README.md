@@ -75,6 +75,7 @@ The basic incompressible continuity equation and its semi-discretization form ar
 $$
 \begin{aligned}
 \nabla \cdot \mathbf{u} = 0 \\
+\downarrow  \\
 \sum_{f}\dot{m_f} = 0
 \end{aligned}
 $$

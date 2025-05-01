@@ -85,6 +85,7 @@ we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity e
 $$
 \begin{aligned}
 \mathbf{u} =\mathbf{u}^*+\mathbf{u}^{\prime} \\
+p=p^{(n)}+p^{\prime}
 \end{aligned}
 $$
 

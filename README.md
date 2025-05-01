@@ -30,7 +30,10 @@ Programming process:<br>
 
 Discretization of convective term and diffusion term in the Momentum equation.<br>
 
-Firstly, we discrete the steady and incompressible momtemum equation:
+-------------------------------------------------------------------------------
+How to use pressure-based Segregated Method to solve velocity-pressure coupling.<br>
+
+Firstly, we discrete and solve the steady and incompressible momtemum equation based on guessed values:
 
 $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
@@ -38,21 +41,22 @@ $$
 
 After volume integral of the convection, diffusion and pressure gradient term, the equation can be written as:
 
-
 $$
 \sum_{f}\left(\dot{m_f} \phi_f \right)-\sum_{f}\left(\mu \nabla \phi_f \cdot \mathbf{S_f}\right)
 = -V_C(\nabla p_C^{(n)}) + \sum_{f}\left(\mu (\nabla \phi_f^{(n)})^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b
 $$
 
-superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
-superscript (*) refers to intermediate values at the current iteration<br>
-superscript prime (') denoting the correction field<br>
-
-A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an
-explicit cross diffusion part, the discretized momentum equation can be written as:
+A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an explicit cross diffusion part, 
+the discretized momentum equation can be written as:
 
 $$
 a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
 $$
 
-which is first solved to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$
+This algebraic equation is first solved to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$
+
+superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
+superscript (*) refers to intermediate values at the current iteration<br>
+superscript prime (') denoting the correction field<br>
+And then, we need to solve the pressure equation
+

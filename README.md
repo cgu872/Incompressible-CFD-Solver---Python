@@ -134,7 +134,7 @@ $$
 $$
 
 $$
-\mathbf{u_C^{*}} + \mathbf{H_C} [\mathbf{u_C^*}] = \mathbf{B_C} - \mathbf{D_C} \nabla (p_C^{(n)})
+\mathbf{u_C^{*}} + \mathbf{H_C} [\mathbf{u_C^{*}}] = \mathbf{B_C} - \mathbf{D_C} \nabla (p_C^{(n)})
 $$
 
 

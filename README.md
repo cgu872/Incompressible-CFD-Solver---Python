@@ -101,10 +101,11 @@ What we need to do is just represent $\dot{m_f}^{\prime}$ in terms of $u', p'$
 
 According to the Rhie-Chow interpolation, the velocity in the faces can be listed as follows:
 
+$$
 \begin{aligned}
 \mathbf{u_f} =\overline{\mathbf{u_f}}-\overline{\mathbf{D_f}}(\nabla p_f -\overline{\nabla p_f})\\
 \mathbf{u_f}^* =\overline{\mathbf{u_f}^*}-\overline{\mathbf{D_f}}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}}) 
 \end{aligned}
+$$
 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable displaystyle="true" columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" rowspacing="3pt"><mtr><mtd><msub><mrow><mi mathvariant="bold">u</mi></mrow><mi>f</mi></msub><mo>=</mo><mover><msub><mrow><mi mathvariant="bold">u</mi></mrow><mi>f</mi></msub><mo accent="false">¯</mo></mover><mo>−</mo><mover><msub><mrow><mi mathvariant="bold">D</mi></mrow><mi>f</mi></msub><mo accent="false">¯</mo></mover><mo stretchy="false">(</mo><mi mathvariant="normal">∇</mi><msub><mi>p</mi><mi>f</mi></msub><mo>−</mo><mover><mrow><mi mathvariant="normal">∇</mi><msub><mi>p</mi><mi>f</mi></msub></mrow><mo accent="false">¯</mo></mover><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><msubsup><mrow><mi mathvariant="bold">u</mi></mrow><mi>f</mi><mo>∗</mo></msubsup><mo>=</mo><mover><msubsup><mrow><mi mathvariant="bold">u</mi></mrow><mi>f</mi><mo>∗</mo></msubsup><mo accent="false">¯</mo></mover><mo>−</mo><mover><msub><mrow><mi mathvariant="bold">D</mi></mrow><mi>f</mi></msub><mo accent="false">¯</mo></mover><mo stretchy="false">(</mo><mi mathvariant="normal">∇</mi><msubsup><mi>p</mi><mi>f</mi><mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>−</mo><mover><mrow><mi mathvariant="normal">∇</mi><msubsup><mi>p</mi><mi>f</mi><mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow></msubsup></mrow><mo accent="false">¯</mo></mover><mo stretchy="false">)</mo></mtd></mtr></mtable></math>
 

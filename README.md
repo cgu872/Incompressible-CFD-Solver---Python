@@ -55,6 +55,7 @@ $$
 \sum_{f}\left(\dot{m_f} \phi_f \right)-\sum_{f}\left(\mu \nabla \phi_f \cdot \mathbf{S_f}\right)
 = -V_C(\nabla p_C^{(n)}) + \sum_{f}\left(\mu (\nabla \phi_f^{(n)})^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b
 $$
+where $\phi_f$ represents $U_x, U_y, U_z$ in the face of cells
 
 A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an explicit cross diffusion part, 
 the discretized momentum equation can be written as:

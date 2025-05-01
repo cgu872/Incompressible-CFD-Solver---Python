@@ -83,7 +83,7 @@ $$
 we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used, which means the difference between the exact and computed fields:
 
 $$
-\mathbf{u} =\mathbf{u}^*
+\mathbf{u} =\mathbf{u}^*+\mathbf{u}^{\prime}
 $$
 
 

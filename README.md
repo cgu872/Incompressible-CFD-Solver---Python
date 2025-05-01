@@ -77,7 +77,7 @@ $$
 \nabla \cdot \mathbf{u} = 0 \\
 \downarrow  \\
 \sum_{f}\dot{m_f} = 0 \\
-where \quad {\dot{m_f}=\rho \mathbf{u}_f \cdot \mathbf{S}_f}
+\rm{where} \quad {\dot{m_f}=\rho \mathbf{u}_f \cdot \mathbf{S}_f}
 \end{aligned}
 $$
 

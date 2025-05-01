@@ -113,3 +113,11 @@ Subtracting these euqations, we can get the relationship between the correct vel
 $$
 {\mathbf{u}_f^{\prime} = \overline{\mathbf{u}_f^{\prime}}-\overline{\mathbf{D}_f}(\nabla p_f^{\prime}-\overline{\nabla p_f^{\prime}})} \tag{2.2}
 $$
+
+Substituting the equation (2.2) into (2.1), it can be expressed as:
+
+$$
+\sum_{f}\rho (\overline{\mathbf{u}_f^{\prime}}+\overline{\mathbf{D}_f}\overline{\nabla p_f^{\prime}}-\overline{\mathbf{D}_f}\nabla p_f^{\prime}) \cdot \mathbf{S}_f=-\sum_{f}\dot{m_f}^{*}} \tag{2.3}
+$$
+
+

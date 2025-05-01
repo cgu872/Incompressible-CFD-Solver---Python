@@ -15,7 +15,7 @@ $$
 \nabla \cdot\mathbf{u}=0
 $$
 
-Firstly, we discrete the steady and incompressible momtemum equation:<br>
+Firstly, we discrete the steady and incompressible momtemum equation:
 $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
 $$

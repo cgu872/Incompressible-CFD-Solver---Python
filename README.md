@@ -132,4 +132,8 @@ $$
 \mathbf{u_C^*}+\mathbf{H_C}\left [\mathbf{u_C^*}  \right ]=\mathbf{B_C}-\mathbf{D_C}\nabla(p_C^{(n)})
 $$
 
+$$
+\mathbf{H_C}+{\left [\mathbf{u_C^*}  \right ]}
+$$
+
 

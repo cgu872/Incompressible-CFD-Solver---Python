@@ -29,3 +29,7 @@ Programming process:<br>
 
 
 Discretization of convective term and diffusion term in the Momentum equation.<br>
+
+$$
+\underline{\nabla \cdot\{\rho \mathbf{v v}\}}=-\nabla p+\underline{\nabla \cdot\{\mu \nabla \mathbf{v}\}}+\nabla \cdot\left\{\mu(\nabla \mathbf{v})^{\mathrm{T}}\right\}+\mathbf{f}_b
+$$

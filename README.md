@@ -84,7 +84,7 @@ we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity e
 
 $$
 
-\mathbf{u} =\mathbf{u}^*+\mathbf{u}^{\prime} 
+\mathbf{u} 
 
 $$
 

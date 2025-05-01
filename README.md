@@ -53,7 +53,7 @@ After volume integral, Gauss theorem and midpoint integration rule of the convec
 
 $$
 {\sum_{f}\left(\dot{m_f} \phi_f \right)-\sum_{f}\left(\mu \nabla \phi_f \cdot \mathbf{S_f}\right)
-= -V_C(\nabla p_C^{(n)}) + \sum_{f}\left(\mu (\nabla \phi_f^{(n)})^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b} \tag{1.1}
+= -V_C(\frac{\partial p^{(n)}}{\partial x_j}) + \sum_{f}\left(\mu (\nabla \phi_f^{(n)})^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b} \tag{1.1}
 $$
 
 where $\phi_f$ represents $u_x, u_y, u_z$ in the faces of cells. The left-hand side of equation is implicitly discrated, and the right-hand side is explicitly calculated.

@@ -70,20 +70,16 @@ continuity equation, because of the linearization in which pressure and velocity
 
 2. And then, we need to solve the continuity (pressure) equation.<br>
 
-The basic incompressible ontinuity equation is shown as follows:
+The basic incompressible continuity equation and its semi-discretization form are shown as follows:
 
 $$
 \begin{aligned}
-\nabla \cdot \mathbf{u} = 0
+\nabla \cdot \mathbf{u} = 0 \\
 \sum_{f}\dot{m_f} = 0
 \end{aligned}
 $$
-And after semi-discretization it can be written as:
-$$
-\sum_{f}\dot{m_f} = 0
-$$
 
-we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used, which means the difference between the exact and computed fields:
+We want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used, which means the difference between the exact and computed fields:
 
 $$
 \begin{aligned}

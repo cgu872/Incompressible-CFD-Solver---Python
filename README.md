@@ -40,8 +40,8 @@ After volume integral of the convection, diffusion and pressure gradient term, t
 
 
 $$
-\sum_{f}\left(\dot{m_f} \phi_f \right)
-\sum_{f}\mu \nabla \phi_f \cdot \mathbf{S_f}= -V_C(\nabla p_C) + \sum_{f}\dot{m_f} \phi_f + V_C \mathbf{f}_b
+\sum_{f}\left(\dot{m_f} \phi_f \right)+
+\sum_{f}\mu \nabla \phi_f \cdot \mathbf{S_f}= -V_C(\nabla p_C) + \sum_{f}\left(\mu (\nabla \phi_f*)^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b
 $$
 
 superscript (n) denoting the initial guess or the solution at the starts of any iterationStart

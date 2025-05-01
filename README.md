@@ -133,7 +133,7 @@ $$
 $$
 
 $$
-\mathbf{H_C}{[\mathbf{u_C^*}]}
+\mathbf{H_C} [\mathbf{u_C^*}]
 $$
 
 

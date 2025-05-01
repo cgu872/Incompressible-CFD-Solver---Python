@@ -83,9 +83,7 @@ $$
 we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used:
 
 $$
-
-\mathbf{u} 
-
+\mathbf{u}
 $$
 
 

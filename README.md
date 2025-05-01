@@ -103,6 +103,6 @@ According to the Rhie-Chow interpolation, the velocity in the faces can be liste
 
 $$
 \mathbf{u}_f =\overline{\mathbf{u}_f}-\overline{\mathbf{D}_f}(\nabla p_f -\overline{\nabla p_f}) \tag{2.2a} \\
-\mathbf{u}_f^* =\overline{\mathbf{u}_f^*}-\overline{\mathbf{D}_f}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}})
+\mathbf{u}_f^* =\overline{\mathbf{u}_f^*}-\overline{\mathbf{D}_f}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}})  \tag{2.2b}
 $$
 

@@ -62,7 +62,7 @@ A HR scheme for the convection term implemented via the deferred correction appr
 the discretized momentum equation of one cell $C$ can be written as:
 
 $$
-a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
+{a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C}  \tag{1.2}
 $$
 
 This algebraic equation is first solved with guessed values or values obtained from the previous iteration to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$, but this velocity field doesn't satisfy the
@@ -118,6 +118,19 @@ Substituting the equation (2.2) into (2.1), it can be expressed as:
 
 $$
 {\sum_{f}\rho (\overline{\mathbf{u_f}^{\prime}}+\overline{\mathbf{D_f}}\overline{\nabla p_f^{\prime}}-\overline{\mathbf{D_f}}\nabla p_f^{\prime}) \cdot \mathbf{S_f}=-\sum_{f}\dot{m_f}^{*}} \tag{2.3}
+$$
+
+To simplify the equation (2.3), another formula should be derived. The equation (1.2) can be reformulated as:
+
+$$
+\mathbf{u_C}+\mathbf{H_C}[\mathbf{u}]=-\mathbf{D_C}(\nabla p_C)+\mathbf{B_C}
+$$
+
+Substituting the corrections and intermediate values,
+
+$$
+(\mathbf{u_C^*}+\mathbf{u_C^{\prime}})+\mathbf{H_C}[\mathbf{u_C^*}+\mathbf{u_C^{\prime}}]=\mathbf{B_C}-\mathbf{D_C}\nabla(p_C^{(n)}+p_C^{\prime}) \\
+\mathbf{u_C^*}+\mathbf{H_C}[\mathbf{u_C^*}]=\mathbf{B_C}-\mathbf{D_C}\nabla(p_C^{(n)}) 
 $$
 
 

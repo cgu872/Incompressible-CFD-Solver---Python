@@ -93,9 +93,7 @@ $$
 Substituting the correction terms, the continuity equation can be written as:
 
 $$
-\begin{equation}
-\sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*} \tag{1.1}
-\end{equation}
+{\sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}} \tag{1}
 $$
 
 where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the intermediate velocity filed $\mathbf{u}^\*$ in cells.<br>

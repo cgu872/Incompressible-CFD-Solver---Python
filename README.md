@@ -35,7 +35,7 @@ Discretization of convective term and diffusion term in the Momentum equation.<b
 
 -------------------------------------------------------------------------------
 How to use pressure-based Segregated Method to solve velocity-pressure coupling.<br>
-  superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
+<p style="text-indent:2em;">superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
   superscript (*) refers to intermediate values at the current iteration<br>
   superscript prime (') denoting the correction field<br>
 

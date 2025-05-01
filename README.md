@@ -52,4 +52,4 @@ $$
 a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
 $$
 
-last :
+which is first solved to obtain a momentum conserving velocity field: $$u^*$$

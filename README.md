@@ -73,7 +73,10 @@ continuity equation, because of the linearization in which pressure and velocity
 The basic incompressible ontinuity equation is shown as follows:
 
 $$
+\begin{aligned}
 \nabla \cdot \mathbf{u} = 0
+\sum_{f}\dot{m_f} = 0
+\end{aligned}
 $$
 And after semi-discretization it can be written as:
 $$
@@ -89,4 +92,4 @@ p=p^{(n)}+p^{\prime}
 \end{aligned}
 $$
 
-
+So 

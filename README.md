@@ -77,6 +77,7 @@ $$
 \nabla \cdot \mathbf{u} = 0 \\
 \downarrow  \\
 \sum_{f}\dot{m_f} = 0
+where \dot{m_f}=\rho _f \mathbf{u}_f \cdot \mathbf{S}_f
 \end{aligned}
 $$
 
@@ -89,13 +90,13 @@ p=p^{(n)}+p^{\prime}
 \end{aligned}
 $$
 
-So the continuity equation can be written as:
+Substituting the correction terms, the continuity equation can be written as:
 
 $$
 \sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}
 $$
 
-where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the intermediate velocity filed $\mathbf{u}^\*$ in cells.
-what we need to do is just represent $\dot{m_f}^{\prime}$ with $u', p'$
+where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the intermediate velocity filed $\mathbf{u}^\*$ in cells.<br>
+What we need to do is just represent $\dot{m_f}^{\prime}$ in terms of $u', p'$
 
 

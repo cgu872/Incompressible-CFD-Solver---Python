@@ -48,6 +48,9 @@ superscript (n) denoting the initial guess or the solution at the starts of any 
 superscript (*) refers to intermediate values at the current iteration<br>
 superscript prime (') denoting the correction field<br>
 
+A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an
+explicit cross diffusion part, the discretized momentum equation can be written as:
+
 $$
 a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
 $$

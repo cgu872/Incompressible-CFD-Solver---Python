@@ -89,4 +89,11 @@ p=p^{(n)}+p^{\prime}
 \end{aligned}
 $$
 
-So 
+So the continuity equation can be written as:
+$$
+\sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}
+$$
+
+
+
+

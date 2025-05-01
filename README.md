@@ -41,7 +41,7 @@ superscript (n) denoting the initial guess or the solution at the starts of any 
 superscript (*) refers to intermediate values at the current iteration;<br>
 superscript prime (') denoting the correction field.<br>
 
-1. Firstly, we need to discrete and solve the steady and incompressible momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}  and  p^{(n)}$$)<br>
+1. Firstly, we need to discrete and solve the steady and incompressible momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}, p^{(n)}$$)<br>
 
 The basic momtemum euqation is shown as follows:
 
@@ -56,7 +56,7 @@ $$
 = -V_C(\nabla p_C^{(n)}) + \sum_{f}\left(\mu (\nabla \phi_f^{(n)})^{\mathrm{T}} \cdot \mathbf{S}_f\right) + V_C \mathbf{f}_b
 $$
 
-where $\phi_f$ represents $U_x, U_y, U_z$ in the face of cells
+where $\phi_f$ represents $u_x, u_y, u_z$ in the faces of cells.
 
 A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an explicit cross diffusion part, 
 the discretized momentum equation can be written as:
@@ -75,9 +75,11 @@ The basic incompressible ontinuity equation is shown as follows:
 $$
 \nabla \cdot \mathbf{u} = 0
 $$
-And it can be written as:
+And after semi-discretization it can be written as:
 $$
 \sum_{f}\dot{m_f} = 0
 $$
+
+we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used to enforce mass conservation
 
 

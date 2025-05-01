@@ -35,6 +35,9 @@ Discretization of convective term and diffusion term in the Momentum equation.<b
 
 -------------------------------------------------------------------------------
 How to use pressure-based Segregated Method to solve velocity-pressure coupling.<br>
+superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
+superscript (*) refers to intermediate values at the current iteration<br>
+superscript prime (') denoting the correction field<br>
 
 1. Firstly, we need to discrete and solve the steady and incompressible momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}  and  p^{(n)}$$)<br>
 
@@ -44,7 +47,7 @@ $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
 $$
 
-After volume integral of the convection, diffusion and pressure gradient term, the equation can be written as:
+After volume integral, Gauss theorem and midpoint integration rule of the convection, diffusion and pressure gradient term, the equation can be written as:
 
 $$
 \sum_{f}\left(\dot{m_f} \phi_f \right)-\sum_{f}\left(\mu \nabla \phi_f \cdot \mathbf{S_f}\right)
@@ -58,12 +61,7 @@ $$
 a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
 $$
 
-This algebraic equation is first solved to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$
-
-superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
-superscript (*) refers to intermediate values at the current iteration<br>
-superscript prime (') denoting the correction field<br>
-
+This algebraic equation is first solved with guessed values or values obtained from the previous iteration to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$
 
 2. And then, we need to solve the continuity(pressure) equation.<br>
 

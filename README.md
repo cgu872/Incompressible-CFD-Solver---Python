@@ -117,7 +117,7 @@ $$
 Substituting the equation (2.2) into (2.1), it can be expressed as:
 
 $$
-\sum_{f}\rho (\overline{\mathbf{u_f}^{\prime}}+\overline{\mathbf{D_f}}\overline{\nabla p_f^{\prime}}-\overline{\mathbf{D_f}}\nabla p_f^{\prime}) \cdot \mathbf{S}_f=-\sum_{f}\dot{m_f}^{*}} \tag{2.3}
+{\sum_{f}\rho (\overline{\mathbf{u_f}^{\prime}}+\overline{\mathbf{D_f}}\overline{\nabla p_f^{\prime}}-\overline{\mathbf{D_f}}\nabla p_f^{\prime}) \cdot \mathbf{S}_f=-\sum_{f}\dot{m_f}^{*}} \tag{2.3}
 $$
 
 

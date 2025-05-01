@@ -59,7 +59,7 @@ $$
 where $\phi_f$ represents $u_x, u_y, u_z$ in the faces of cells.
 
 A HR scheme for the convection term implemented via the deferred correction approach, and decomposing the diffusion flux into an implicit part aligned with the grid and an explicit cross diffusion part, 
-the discretized momentum equation can be written as:
+the discretized momentum equation of one cell $C$ can be written as:
 
 $$
 a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C

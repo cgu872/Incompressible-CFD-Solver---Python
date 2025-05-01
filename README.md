@@ -99,4 +99,12 @@ $$
 where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the intermediate velocity filed $\mathbf{u}^\*$ in cells.<br>
 What we need to do is just represent $\dot{m_f}^{\prime}$ in terms of $u', p'$
 
+According to the Rhie-Chow interpolation, the velocity in the faces can be listed as follows:
+
+$$
+\begin{aligned}
+\mathbf{u}_f =\overline{\mathbf{u}_f}-\overline{\mathbf{D}_f}(\nabla p_f -\overline{\nabla p_f}) \tag{2.2a}\\
+\mathbf{u}_f^* =\overline{\mathbf{u}_f^*}-\overline{\mathbf{D}_f}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}}) \tag{2.2b}
+\end{aligned}
+$$
 

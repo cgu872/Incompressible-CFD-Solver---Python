@@ -102,7 +102,7 @@ What we need to do is just represent $\dot{m_f}^{\prime}$ in terms of $u', p'$
 According to the Rhie-Chow interpolation, the velocity in the faces can be listed as follows:
 
 \begin{aligned}
-\mathbf{u}_f =\overline{\mathbf{u}_f}-\overline{\mathbf{D}_f}(\nabla p_f -\overline{\nabla p_f})\\
-\mathbf{u}_f^* =\overline{\mathbf{u}_f^*}-\overline{\mathbf{D}_f}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}}) 
+\mathbf{u_f} =\overline{\mathbf{u_f}}-\overline{\mathbf{D_f}}(\nabla p_f -\overline{\nabla p_f})\\
+\mathbf{u_f}^* =\overline{\mathbf{u_f}^*}-\overline{\mathbf{D_f}}(\nabla p_f^{(n)} -\overline{\nabla p_f^{(n)}}) 
 \end{aligned}
 

@@ -80,6 +80,14 @@ $$
 \sum_{f}\dot{m_f} = 0
 $$
 
-we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used to enforce mass conservation
+we want to correct the velocity field $\mathbf{u}^*$ to satisfy the continuity equation, so the corrections to the velocity and pressure fields  $u', p'$ are used:
+
+$$
+\begin{aligned}
+\mathbf{u} & =\mathbf{u}^*+\mathbf{u}^{\prime} \\
+p & =p^{(n)}+p^{\prime} \\
+m & =m^*+m^{\prime}
+\end{aligned}
+$$
 
 

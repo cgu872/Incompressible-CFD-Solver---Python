@@ -30,10 +30,14 @@ Programming process:<br>
 
 Discretization of convective term and diffusion term in the Momentum equation.<br>
 
+
+
+
 -------------------------------------------------------------------------------
 How to use pressure-based Segregated Method to solve velocity-pressure coupling.<br>
 
-Firstly, we discrete and solve the steady and incompressible momtemum equation based on guessed values:
+1. Firstly, we need to discrete and solve the steady and incompressible momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}$$,$$p^{(n)}$$)<br>
+The basic momtemum euqation 
 
 $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
@@ -58,5 +62,7 @@ This algebraic equation is first solved to obtain a momentum conserving velocity
 superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
 superscript (*) refers to intermediate values at the current iteration<br>
 superscript prime (') denoting the correction field<br>
-And then, we need to solve the pressure equation
+
+
+2.And then, we need to solve the continuity(pressure) equation.<br>
 

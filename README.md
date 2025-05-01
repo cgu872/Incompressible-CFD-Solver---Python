@@ -95,6 +95,7 @@ $$
 \sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}
 $$
 
+where $\mathbf{u}^*$ in faces can be interpolated by the velocity filed in cells.
 
 
 

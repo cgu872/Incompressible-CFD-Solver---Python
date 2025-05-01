@@ -16,9 +16,13 @@ $$
 $$
 
 Firstly, we discrete the steady and incompressible momtemum equation:
+
+
 $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
 $$
+
+
 
 Programming process:<br>
 1. Firstly, read the setting files<br>

@@ -64,7 +64,18 @@ a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
 $$
 
 This algebraic equation is first solved with guessed values or values obtained from the previous iteration to obtain a momentum conserving velocity field: $$\mathbf{u}^*$$, but this velocity field doesn't satisfy the
-continuity equation because of the linearization in which pressure and velocity are based on the previous iteration values.
+continuity equation, because of the linearization in which pressure and velocity are based on the previous iteration values.
 
 2. And then, we need to solve the continuity (pressure) equation.<br>
+
+The basic incompressible ontinuity equation is shown as follows:
+
+$$
+\nabla \cdot \mathbf{u} = 0
+$$
+And it can be written as:
+$$
+\sum_{f}\dot{m_f} = 0
+$$
+
 

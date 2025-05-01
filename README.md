@@ -14,9 +14,6 @@ Continuity equation
 $$
 \nabla \cdot\mathbf{u}=0
 $$
-$$
-\nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
-$$
 
 
 Programming process:<br>
@@ -33,4 +30,8 @@ Programming process:<br>
 
 Discretization of convective term and diffusion term in the Momentum equation.<br>
 
+Firstly, we discrete the steady and incompressible momtemum equation:
+$$
+\nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
+$$
 

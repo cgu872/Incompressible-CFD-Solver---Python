@@ -94,7 +94,7 @@ Substituting the correction terms, the continuity equation can be written as:
 
 $$
 \begin{equation}
-\sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*} \label{1}
+\sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}
 \end{equation}
 $$
 

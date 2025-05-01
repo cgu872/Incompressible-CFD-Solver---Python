@@ -15,7 +15,7 @@ $$
 \nabla \cdot\mathbf{u}=0
 $$
 $$
-\underline{\nabla \cdot\{\rho \mathbf{v v}\}}=-\nabla p+\underline{\nabla \cdot\{\mu \nabla \mathbf{v}\}}+\nabla \cdot\left\{\mu(\nabla \mathbf{v})^{\mathrm{T}}\right\}+\mathbf{f}_b
+\nabla \cdot\{\rho \mathbf{v v}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{v}\}+\nabla \cdot\left\{\mu(\nabla \mathbf{v})^{\mathrm{T}}\right\}+\mathbf{f}_b
 $$
 
 Programming process:<br>

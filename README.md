@@ -111,5 +111,5 @@ $$
 Subtracting these euqations, we can get the relationship between the correct velocity in the faces and cells:
 
 $$
-\mathbf{u}_f^{\prime} = \overline{\mathbf{u}_f^{\prime}}-\overline{\mathbf{D}_f}(\nabla p_f^{\prime}-\overline{\nabla p_f^{\prime}}) \tag{2.2}
+{\mathbf{u}_f^{\prime} = \overline{\mathbf{u}_f^{\prime}}-\overline{\mathbf{D}_f}(\nabla p_f^{\prime}-\overline{\nabla p_f^{\prime}})} \tag{2.2}
 $$

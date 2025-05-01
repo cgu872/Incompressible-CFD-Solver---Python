@@ -34,6 +34,9 @@ Discretization of convective term and diffusion term in the Momentum equation.<b
 
 Firstly, we discrete the steady and incompressible momtemum equation:<br>
 $$
-\nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
+\nabla \cdot\{\rho \mathbf{u u}\} = -\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
+$$
+$$
+\nabla \cdot\mathbf{u}=0
 $$
 where $\phi$ represents $U_x, U_y, U_z$. $\Gamma^\phi$ can be directly replaced with constant dynamic viscosity $\mu$. And $Q^\phi$ is generally setted as 0.

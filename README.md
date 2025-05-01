@@ -95,7 +95,7 @@ $$
 \sum_{f}\dot{m_f}^{\prime}=-\sum_{f}\dot{m_f}^{*}
 $$
 
-where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the velocity filed $u^\*$ in cells.
+where $\dot{m_f}^{*}$ in faces can be Rhie-Chow interpolated by the velocity filed $\mathbf{u}^\*$ in cells.
 
 
 

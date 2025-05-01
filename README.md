@@ -47,4 +47,9 @@ $$
 superscript (n) denoting the initial guess or the solution at the starts of any iterationStart<br>
 superscript (*) refers to intermediate values at the current iteration<br>
 superscript prime (') denoting the correction field<br>
+
+$$
+a_C \mathbf{u}_C+\sum a_F \mathbf{u}_F=\mathbf{b}_C
+$$
+
 last :

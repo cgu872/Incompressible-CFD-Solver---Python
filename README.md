@@ -36,3 +36,8 @@ $$
 \nabla \cdot\{\rho \mathbf{u u}\}=-\nabla p+\nabla \cdot\{\mu \nabla \mathbf{u}\}+\nabla \cdot\{\mu(\nabla \mathbf{u})^{\mathrm{T}}}+\mathbf{f}_b
 $$
 
+After volume integral of the convection, diffusion and pressure gradient term, the equation can be written as:
+
+$$
+\sum_{f}\left(\dot{m_f} \phi_f \right)- \sum_{f}\left(\mu \nabla \phi_f \cdot \mathbf{S}_f\right)= -V_C\nabla p_C + \sum_{f}\left(\mu (\nabla \phi_f*)^{\mathrm{T}} \cdot \mathbf{S}_f\right)+V_C \mathbf{f}_b
+$$

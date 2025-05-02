@@ -163,4 +163,7 @@ $$
 {\sum_{f} -\rho \overline{\mathbf{D_f}} (\nabla p_f^{\prime}) \cdot \mathbf{S_f}=-\sum_{f}\dot{m_f}^{*} + \sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}} \tag{2.4}
 $$
 
- In the original SIMPLE algorithm,  $\sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}$ is neglected. 
+In the original SIMPLE algorithm,  $\sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}$ is neglected, because the corrections will become zero at convergence. For this correction equation, the modification or dropping of the term will affect the convergence rate rather than the final solution.
+
+Besides, $\nabla p_f^{\prime}$ can be implicitlt discreted as the form of $p_C^{\prime}$
+

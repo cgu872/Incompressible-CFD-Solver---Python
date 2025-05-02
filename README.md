@@ -130,8 +130,8 @@ Substituting the corrections and intermediate values,
 
 $$
 \begin{aligned}
-(\mathbf{u_C^{\ast}}+\mathbf{u_C^{\prime}})+\mathbf{H_C} [\mathbf{u_C^{\ast}}+\mathbf{u_C^{\prime}}]=\mathbf{B_C}-\mathbf{D_C}\nabla(p_C^{(n)}+p_C^{\prime}) \\
-\mathbf{u_C^{\ast}} + \mathbf{H_C} [\mathbf{u_C^{\ast}}] = \mathbf{B_C} - \mathbf{D_C} \nabla (p_C^{(n)})
+(\mathbf{u_C^{\ast}}+\mathbf{u_C^{\prime}})+\mathbf{H_C} [\mathbf{u^{\ast}}+\mathbf{u^{\prime}}]=\mathbf{B_C}-\mathbf{D_C}\nabla(p_C^{(n)}+p_C^{\prime}) \\
+\mathbf{u_C^{\ast}} + \mathbf{H_C} [\mathbf{u^{\ast}}] = \mathbf{B_C} - \mathbf{D_C} \nabla (p_C^{(n)})
 \end{aligned}
 $$
 

@@ -153,7 +153,7 @@ $$
 \begin{aligned}
 \overline{\mathbf{u_f^{\prime}}} + \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] = - \overline{\mathbf{D_f}} \overline{\nabla (p_f^{\prime})}\\
 \Downarrow \\
-{\overline{\mathbf{u_f^{\prime}}}+ \overline{\mathbf{D_f}} \overline{\nabla (p_f^{\prime})}=-\overline{\mathbf{H_f}} [\mathbf{u^{\prime}}]} \tag{2.3}
+{\overline{\mathbf{u_f^{\prime}}}+ \overline{\mathbf{D_f}} \overline{\nabla (p_f^{\prime})}=-\overline{\mathbf{H_f}} [\mathbf{u^{\prime}}]}
 \end{aligned}
 $$
 

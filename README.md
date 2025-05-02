@@ -165,7 +165,7 @@ $$
 
 In the original SIMPLE algorithm,  $\sum_{f}\rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}$ is neglected, because the corrections will become zero at convergence. For this correction equation, the modification or dropping of the term will affect the convergence rate rather than the final solution.
 
-Besides, $\nabla p_f^{\prime}$ in Equation (2.4) can be implicitlt discreted as the form of $p_C^{\prime}$:
+Besides, $\overline{\mathbf{D_f}} (\nabla p_f^{\prime}) \cdot \mathbf{S_f}$ in Equation (2.4) can be further simplified:
 
 $$
 \begin{aligned}
@@ -174,3 +174,10 @@ $$
 =(\nabla p_f^{\prime}) \cdot (\mathbf{E_f^{\prime}}+\mathbf{T_f^{\prime}})
 \end{aligned}
 $$
+
+where, the orthogonal contribution can be implicitlt discreted as the form of $p_C^{\prime}$, and the cross-diffusion or non-orthogonal contributioin can only be calculated explicitly:
+
+$$
+{{\sum_{f} -\rho \frac{E_f}{d_{CF}}  (p_F^{\prime}-p_C^{\prime})=-\sum_{f}\dot{m_f}^{*} + \sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}}+\sum_{f} \rho (\nabla p_f^{\prime}) \cdot \mathbf{T_f^{\prime}}} \tag{2.5}
+$$
+

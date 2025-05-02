@@ -157,3 +157,10 @@ $$
 \end{aligned}
 $$
 
+Substituting it in Equation (2.3), the pressure correction equation is rewritten as
+
+$$
+{\sum_{f} -\rho \overline{\mathbf{D_f}} \nabla p_f^{\prime}) \cdot \mathbf{S_f}=-\sum_{f}\dot{m_f}^{*}} \tag{2.4}
+$$
+
+

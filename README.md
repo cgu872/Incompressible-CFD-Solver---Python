@@ -160,7 +160,7 @@ $$
 Substituting it in Equation (2.3), the pressure correction equation is rewritten as
 
 $$
-{\sum_{f} -\rho \overline{\mathbf{D_f}} (\nabla p_f^{\prime}) \cdot \mathbf{S_f}=-\sum_{f}\dot{m_f}^{*} + \sum_{f} -\rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}} \tag{2.4}
+{\sum_{f} -\rho \overline{\mathbf{D_f}} (\nabla p_f^{\prime}) \cdot \mathbf{S_f}=-\sum_{f}\dot{m_f}^{*} + \sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}} \tag{2.4}
 $$
 
-
+ In the original SIMPLE algorithm,  $\sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}$ is neglected. 

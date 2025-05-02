@@ -181,4 +181,4 @@ $$
 {{\sum_{f} -\rho \frac{E_f}{d_{CF}}  (p_F^{\prime}-p_C^{\prime})=-\sum_{f}\dot{m_f}^{*} + \sum_{f} \rho \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] \cdot \mathbf{S_f}}+\sum_{f} \rho (\nabla p_f^{\prime}) \cdot \mathbf{T_f^{\prime}}} \tag{2.5}
 $$
 
-Samely, *(\nabla p_f^{\prime}) \cdot \mathbf{T_f^{\prime}}* can be neglected, because it is a correction term. And if it is treated explicitly, that is the non-orthogonal loop in OpenFOAM.
+Samely, $(\nabla p_f^{\prime}) \cdot \mathbf{T_f^{\prime}}$ can be neglected, because it is a correction term. And if it is treated explicitly, that is the non-orthogonal loop in OpenFOAM.

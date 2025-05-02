@@ -167,3 +167,10 @@ In the original SIMPLE algorithm,  $\sum_{f}\rho \overline{\mathbf{H_f}} [\mathb
 
 Besides, $\nabla p_f^{\prime}$ in Equation (2.4) can be implicitlt discreted as the form of $p_C^{\prime}$:
 
+$$
+\begin{aligned}
+\overline{\mathbf{D_f}} (\nabla p_f^{\prime}) \cdot \mathbf{S_f}= (\nabla p_f^{\prime}) \cdot (\overline{\mathbf{D_f}}^{\mathrm{T}} \cdot \mathbf{S_f}) \\
+=(\nabla p_f^{\prime}) \cdot \mathbf{S_f^{\prime}} \\
+=(\nabla p_f^{\prime}) \cdot (\mathbf{E_f^{\prime}}+\mathbf{T_f^{\prime}})
+\end{aligned}
+$$

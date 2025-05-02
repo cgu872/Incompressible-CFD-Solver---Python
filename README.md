@@ -138,13 +138,13 @@ $$
 Subtracting the two euqations,
 
 $$
-\mathbf{u_C^{\prime}} + \mathbf{H_C} [\mathbf{u_C^{\prime}}] = - \mathbf{D_C} \nabla (p_C^{\prime}) 
+\mathbf{u_C^{\prime}} + \mathbf{H_C} [\mathbf{u^{\prime}}] = - \mathbf{D_C} \nabla (p_C^{\prime}) 
 $$
 
 A similar equation for element F (element C is linked to element F by face f) and is given by
 
 $$
-\mathbf{u_F^{\prime}} + \mathbf{H_F} [\mathbf{u_F^{\prime}}] = - \mathbf{D_F} \nabla (p_F^{\prime}) 
+\mathbf{u_F^{\prime}} + \mathbf{H_F} [\mathbf{u^{\prime}}] = - \mathbf{D_F} \nabla (p_F^{\prime}) 
 $$
 
 

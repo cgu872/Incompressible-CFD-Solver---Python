@@ -147,4 +147,9 @@ $$
 \mathbf{u_F^{\prime}} + \mathbf{H_F} [\mathbf{u^{\prime}}] = - \mathbf{D_F} \nabla (p_F^{\prime}) 
 $$
 
+Thus the velocity corrections in the faces:
+
+$$
+\overline{\mathbf{u_f^{\prime}}} + \overline{\mathbf{H_f}} [\mathbf{u^{\prime}}] = - \overline{\mathbf{D_f}} \overline{\nabla (p_f^{\prime}))
+$$
 

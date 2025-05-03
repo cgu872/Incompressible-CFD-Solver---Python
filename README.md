@@ -41,7 +41,7 @@ superscript (n) denoting the initial guess or the solution at the starts of any 
 superscript (*) refers to intermediate values at the current iteration;<br>
 superscript prime (') denoting the correction field.<br>
 
-1. Firstly, we need to discrete and solve the steady and incompressible momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}, p^{(n)}$$)<br>
+1. Firstly, we need to discrete and solve the steady and incompressible and Newtonian fluid momtemum equation based on initial/guessed values($$\mathbf{u}^{(n)}, p^{(n)}$$)<br>
 
 The basic momtemum euqation is shown as follows:
 
